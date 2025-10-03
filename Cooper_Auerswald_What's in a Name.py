@@ -1,11 +1,10 @@
 '''
 Author: Cooper Auerswald
-Date: 9/30/2025
+Date: 10/3/2025
 Description: Practicing functions for CS2 Class
-Bugs: returns first name as doctor - middle name and last name dont work if mulitple middle names - 
+Bugs: N/A
 Challenges: sorted array of characters, menu, title boolean,  
 Sources: Mr. Cambell
-Log: 1.0 Initial Release
 '''
 
 import random
@@ -63,8 +62,15 @@ def first_name(name): #run title function, if true, make first name index 1 inst
     Returns:
         names[0]: the first in the list of names
         '''
-    names=name.split(" ")
-    return(names[0])
+    if title(name):
+        True
+        names=name.split(" ")
+        return(names[1])
+
+    elif title (name):
+        False
+        names=name.split(" ")
+        return(names[0])
 
 def last_name(name):
     '''
@@ -75,9 +81,15 @@ def last_name(name):
     Returns:
         names[2]: the last in the list of names
         '''
-    names=name.split(" ")
-    return(names[2])
+    if title(name):
+        True
+        names=name.split(" ")
+        return(names[3])
 
+    elif title (name):
+        False
+        names=name.split(" ")
+        return(names[2])
 def middle_name(name):
     '''
     Description: separates out the middle name
@@ -87,8 +99,15 @@ def middle_name(name):
     Returns:
         names[1]: the second in the list of names
         '''
-    names=name.split(" ")
-    return(names[1])
+    if title(name):
+        True
+        names=name.split(" ")
+        return(names[2])
+
+    elif title (name):
+        False
+        names=name.split(" ")
+        return(names[1])
 
 def hyphenated (name):
     '''
@@ -115,7 +134,7 @@ def lowercase(name):
     Returns:
         name_out: name in all lowercase
         '''
-    name_out=" "
+    name_out=""
     for letter in name:
         if ord (letter) >64 and ord(letter) <91:
             num=ord(letter)
@@ -124,7 +143,7 @@ def lowercase(name):
             name_out=name_out+letter
         else:
            name_out=name_out+letter
-    return (name_out)
+    return name_out
 
 def uppercase(name):
     '''
@@ -173,13 +192,13 @@ def palindrome(name):
     Returns:
         status: true or false
         '''
-    lower_name = lowercase(name)
+    lower_name = lowercase(name).strip()
+
     reverse_name = reverse(lower_name)
     if reverse_name == lower_name:
         return True
     else:
         return False
-
 
 def title(name): # finish documentation when done
     '''  
@@ -213,7 +232,7 @@ def initials(name):
     return initials
 
 def sort(name):
-    #turn to list
+    #turn to string
     '''
     Description: returns a sorted array of characters
 
@@ -227,18 +246,10 @@ def sort(name):
     chars = list(real_name)
     sorted_chars=sorted(chars)
     order = order = sorted_chars
-    return (order)
+    ' '.join(order)
+    return order
 
-def main (): #WHAT WOULD RETURNS BE
-    '''
-    Description: main menu function
-
-    Args:
-        name(str): the original name input
-        selection(str): The choice of function to run
-    Returns:
-        
-        '''
+def main ():
     name=input ("What is your full name? ")
     while True:
         selection=input ('''
@@ -290,7 +301,6 @@ What would you like to do? (q to quit)
             print (title(name))
         else:
             print ("Invalid Response")
-        
 
 main()
         
