@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Dimensions</title>
+</head>
+<body style="background-color: rgb(17, 118, 24);">
+
+    <form id="boxForm">
+        <label for="length">Length:</label>
+        <input type="number" id="length" step="0.01"><br><br>
+
+        <label for="height">Height:</label>
+        <input type="number" id="height" step="0.01"><br><br>
+        
+        <label for="thickness">Thickness:</label>
+        <input type="number" id="thickness" step="0.01"><br><br>
+        
+        <label for="zipFrom">Zip From:</label>
+        <input type="number" id="zipFrom"><br><br>
+        
+        <label for="zipTo">Zip To:</label>
+        <input type="number" id="zipTo"><br><br>
+        
+        <button type="button" onclick="main()">Submit</button>
+    </form>
+
+    <script>
+
+    /* MAIN FUNCTION */
+    function main() {
+        const length = parseFloat(document.getElementById('length').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const thickness = parseFloat(document.getElementById('thickness').value);
+        const zipFrom = parseInt(document.getElementById('zipFrom').value);
+        const zipTo = parseInt(document.getElementById('zipTo').value);
+
+        const zoneFrom = find_zone(zipFrom);
+        const zoneTo = find_zone(zipTo);
+
+        const distance = find_distance(zipTo, zipFrom);
+        const mailType = postage_type(length, height, thickness);
+        const result = find_price(mailType, Math.abs(zoneFrom - zoneTo));
+
+        alert("Mail Type: " + mailType +
+              "\nZone Distance: " + distance +
+              "\nPrice: " + format(result));
+    }
+
+    /* FIXED: ZIP → ZONE */
+    function find_zone(zipcode) {
+        if (zipcode < 1 || zipcode > 99999)
+            return "Invalid Zip";
+
+        if (zipcode <= 6999) return 1;
+        if (zipcode <= 19999) return 2;
+        if (zipcode <= 35999) return 3;
+        if (zipcode <= 62999) return 4;
+        if (zipcode <= 84999) return 5;
+        return 6;
+    }
+
+    /* FIXED: Correct abs + logic */
+    function find_distance(end_zip, start_zip) {
+        const end_zone = find_zone(end_zip);
+        const start_zone = find_zone(start_zip);
+
+        if (end_zone === "Invalid Zip" || start_zone === "Invalid Zip") 
+            return "UNMAILABLE";
+
+        return Math.abs(end_zone - start_zone);
+    }
+
+    /* FIXED: JS cannot do 3 <= x <= 4 style comparisons */
+    function postage_type(length, height, thickness) {
+
+        if (length >= 3.5 && length <= 4.25 &&
+            height >= 3.5 && height <= 6 &&
+            thickness >= .007 && thickness <= .016)
+            return "Regular Post Card";
+
+        if (length > 4.25 && length < 6 &&
+            height > 6 && height < 11.5 &&
+            thickness >= .007 && thickness <= .015)
+            return "Large Post Card";
+
+        if (length >= 3.5 && length <= 6.125 &&
+            height >= 5 && height <= 11.5 &&
+            thickness > .016 && thickness < .25)
+            return "Envelope";
+
+        if (length > 6.125 && length < 24 &&
+            height >= 11 && height <= 18 &&
+            thickness >= .25 && thickness <= .5)
+            return "Large Envelope";
+
+        return "Package";
+    }
+
+    /* FIXED: Price calculator */
+    function find_price(type, zones) {
+        if (type === "Regular Post Card") return 0.20 + 0.03 * zones;
+        if (type === "Large Post Card") return 0.37 + 0.03 * zones;
+        if (type === "Envelope") return 0.37 + 0.04 * zones;
+        if (type === "Large Envelope") return 0.60 + 0.05 * zones;
+        if (type === "Package") return 2.95 + 0.25 * zones;
+        return "UNMAILABLE";
+    }
+
+    /* FIXED: format function */
+    function format(cost) {
+        if (cost === "UNMAILABLE") return "UNMAILABLE";
+        return "$" + cost.toFixed(2);
+    }
+
+    </script>
+</body>
+</html>
