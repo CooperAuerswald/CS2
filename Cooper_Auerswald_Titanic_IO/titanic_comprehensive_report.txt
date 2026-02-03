@@ -1,0 +1,24 @@
+TITANIC COMPREHENSIVE SURVIVAL REPORT
+========================================
+
+OVERALL STATISTICS
+Total passengers: 891
+Total survivors: 342
+Overall survival rate: 38.38%
+
+SURVIVAL BY GENDER
+Male: 18.89%
+Female: 74.20%
+
+SURVIVAL BY CLASS
+Class 1: 62.96%
+Class 2: 47.28%
+Class 3: 24.24%
+
+SURVIVAL BY AGE GROUP
+Child (<18): 53.98%
+Adult (18-60): 38.69%
+Senior (>60): 22.73%
+
+MOST LIKELY SURVIVOR PROFILE
+Gender: female, Class: 1
