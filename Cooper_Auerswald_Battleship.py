@@ -5,7 +5,7 @@ Description:
     Battleship game where the player has 10 turns to find 3 hidden ships on a 5x5 grid.
 Bugs: 
     Fixed infinite loop in rand_dots, fixed game not ending, fixed crash on
-    invalid input, fixed board resetting each loop iteration.
+    invalid input, fixed board resetting each loop iteration. Added function documentation.
 Sources: Charlie Gordon helped me with the basic setup of the rand_dots function
 Version: 1.1
 '''
@@ -13,6 +13,19 @@ Version: 1.1
 import random
 
 def rand_dots(hidden_board): #function to randomly place ships on the hidden board
+    """
+    Randomly places a single ship on the hidden game board.
+
+    Continuously generates random coordinates until an empty cell is found,
+    then marks that cell as occupied by a ship.
+
+    Args:
+        hidden_board (list[list[str]]): A 5x5 2D list representing the hidden
+            game board. Empty cells are marked with "X" and ships with "H".
+
+    Returns:
+        None: Modifies hidden_board in place.
+        """
     while True: #loop to ensure we place a ship in an empty spot
         random_column = random.randint(0, 4) #generate random column index
         random_row = random.randint(0, 4) #generate random row index
@@ -21,12 +34,42 @@ def rand_dots(hidden_board): #function to randomly place ships on the hidden boa
             break
 
 def print_board(player_board): #function to print the player's board
+    """
+    Prints the player's game board to the console.
+
+    Iterates through each row of the board and prints it, with a blank
+    line added before and after for readability.
+
+    Args:
+        player_board (list[list[str]]): A 2D list representing the player's
+            game board, where each inner list is a row of cell values.
+
+    Returns:
+        None: Outputs directly to the console.
+        """
     print() 
     for row in player_board: #loop through each row in the player's board and print it
         print(row)
     print()
 
 def turn(player_board, hidden_board, hits): #function to handle a player's turn, takes in the player's board, the hidden board, and the current number of hits
+    """
+    Handles a single player turn in the Battleship game.
+
+    Prompts the player to enter row and column coordinates for their shot,
+    validates the input, checks for repeated guesses, and updates both the
+    player's visible board and the hit counter accordingly.
+
+    Args:
+        player_board (list[list[str]]): A 2D list representing the player's
+            visible board, updated with hits ("H") and misses ("M").
+        hidden_board (list[list[str]]): A 2D list representing the hidden
+            board where ship positions are stored as "H".
+        hits (int): The current number of successful hits.
+
+    Returns:
+        int: The updated number of hits after this turn.
+        """
     while True: #loop to ensure valid input and that the player doesn't guess the same spot twice
         shot_row = input("Select a row (1-5): ") #prompt the player to select a row
         if not shot_row.isdigit() or not (1 <= int(shot_row) <= 5): #check if the input is a valid number between 1 and 5   
@@ -57,6 +100,13 @@ def turn(player_board, hidden_board, hits): #function to handle a player's turn,
         return hits
 
 def main(): #main function to run the game
+    """
+    Args:
+        None
+
+    Returns:
+        None
+        """
     turns = 10 #number of turns the player has to find the ships
     hits = 0 #number of hits the player has made
     total_ships = 3 #total number of ships hidden on the board
